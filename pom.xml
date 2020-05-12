@@ -6,7 +6,7 @@
 
     <groupId>dev.mja00</groupId>
     <artifactId>autoserf</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>Autoserf</name>
