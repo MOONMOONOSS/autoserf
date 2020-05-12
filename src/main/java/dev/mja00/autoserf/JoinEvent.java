@@ -18,20 +18,25 @@ public class JoinEvent implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        if (!isPlayerInTeam(player, teams)) {
-            try {
-                player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
-            } catch (NullPointerException e) {
-                System.out.println("Serfs team didn't exist. Creating it.");
-                player.getServer().getScoreboardManager().getMainScoreboard().registerNewTeam("Serfs");
-                player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
+        //System.out.println("Player joined, waiting to check for team.");
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+            @Override
+            public void run() {
+                Player player = event.getPlayer();
+                if (!isPlayerInTeam(player, teams)) {
+                    try {
+                        player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
+                    } catch (NullPointerException e) {
+                        System.out.println("Serfs team didn't exist. Creating it.");
+                        player.getServer().getScoreboardManager().getMainScoreboard().registerNewTeam("Serfs");
+                        player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
+                    }
+
+                    player.sendMessage("Welcome to Tillicum. Enjoy starving to death.");
+                    System.out.println(player.getName() + " is new. Assigning Serf team.");
+                }
             }
-
-            player.sendMessage("Welcome to Tillicum. Enjoy starving to death.");
-            System.out.println(player.getName() + " is new. Assigning Serf team.");
-        }
-
+        }, 100);
     }
 
     public static boolean isPlayerInTeam(Player player, Set<Team> teams) {
