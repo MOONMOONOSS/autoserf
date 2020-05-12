@@ -1,0 +1,7 @@
+name: Autoserf
+version: ${project.version}
+main: dev.mja00.autoserf.Autoserf
+api-version: 1.13
+authors: [mja00]
+description: Automatically applies the serf team to any new players
+website: https://mja00.dev
