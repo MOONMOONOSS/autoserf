@@ -20,7 +20,14 @@ public class JoinEvent implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (!isPlayerInTeam(player, teams)) {
-            player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
+            try {
+                player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
+            } catch (NullPointerException e) {
+                System.out.println("Serfs team didn't exist. Creating it.");
+                player.getServer().getScoreboardManager().getMainScoreboard().registerNewTeam("Serfs");
+                player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
+            }
+
             player.sendMessage("Welcome to Tillicum. Enjoy starving to death.");
             System.out.println(player.getName() + " is new. Assigning Serf team.");
         }
