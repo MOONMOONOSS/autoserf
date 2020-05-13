@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -14,7 +15,6 @@ import java.util.Set;
 public class JoinEvent implements Listener {
 
     Plugin plugin = Autoserf.getPlugin(Autoserf.class);
-    Set<Team> teams = plugin.getServer().getScoreboardManager().getMainScoreboard().getTeams();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -23,6 +23,7 @@ public class JoinEvent implements Listener {
             @Override
             public void run() {
                 Player player = event.getPlayer();
+                Set<Team> teams = plugin.getServer().getScoreboardManager().getMainScoreboard().getTeams();
                 if (!isPlayerInTeam(player, teams)) {
                     try {
                         player.getServer().getScoreboardManager().getMainScoreboard().getTeam("Serfs").addEntry(player.getName());
@@ -48,4 +49,5 @@ public class JoinEvent implements Listener {
         }
         return false;
     }
+
 }
